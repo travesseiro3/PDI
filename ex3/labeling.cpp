@@ -6,6 +6,7 @@ using namespace cv;
 using namespace std;
 
 int main(int argc, char** argv){
+
   Mat image, mask;
   int width, height;
   int nova_cor;
@@ -18,6 +19,7 @@ int main(int argc, char** argv){
     std::cout << "imagem nao carregou corretamente\n";
     return(-1);
   }
+
   //Captura das dimensões da imagem
   width=mask.size().width;
   height=mask.size().height;
@@ -80,40 +82,20 @@ int main(int argc, char** argv){
   	  }
     }
   }
-  int ponto, leste, oeste, sul, norte;
+
+  int ponto, oeste;
   //Identificação dos objetos com buracos
   for(int i=1; i < height-1; i++){
     for(int j=1; j < width-1; j++){
       //Caso tenha encontrado algum buraco
       ponto = mask.at<uchar>(i,j);
-      norte = mask.at<uchar>(i-1,j);
-      sul   = mask.at<uchar>(i+1,j);
       oeste = mask.at<uchar>(i,j-1);
-      leste = mask.at<uchar>(i,j+1);
       if(ponto == 0){
-        //Analise se o pixel de cima não é buraco
-        if(norte!=0 && norte!=1 && norte!=125){
-          //Se não for, pinte com o tom de cinza = "125"
-          cout << "NORTE : [" << i << " , " << j << "] \n";
-          floodFill(mask, {j, i-1}, 125);
-        }
-        //Analise se o pixel de baixo não é buraco
-        else if(sul != 0 && sul != 1 && sul != 125){
-          //Se não for, pinte com o tom de cinza = "125"
-          cout << "SUL : [" << i << " , " << j << "] \n";
-          floodFill(mask, {j, i+1}, 125);
-        }
         //Analise se o pixel da esquerda não é buraco
-        else if(oeste !=0 && oeste != 1 && oeste != 125){
+        if(oeste !=0 && oeste != 1 && oeste != 125){
           //Se não for, pinte com o tom de cinza = "125"
           cout << "OESTE : [" << i << " , " << j << "] \n";
           floodFill(mask, {j-1, i}, 125);
-        }
-        //Analise se o pixel da direita não é buraco
-        else if(leste != 0 && leste != 1 && leste != 125){
-          //Se não for, pinte com o tom de cinza = "125"
-          cout << "LESTE : [" << i << " , " << j << "] \n";
-          floodFill(mask, {j+1, i}, 125);
         }
       }
     }
