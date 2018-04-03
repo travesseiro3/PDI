@@ -9,7 +9,7 @@ int main(int argc, char** argv){
 
   Mat image, mask;
   int width, height;
-  int nova_cor;
+  int new_color, n_objects=0, holes=0;
   Point p;
 
   image = imread(argv[1],CV_LOAD_IMAGE_GRAYSCALE);
@@ -21,8 +21,8 @@ int main(int argc, char** argv){
   }
 
   //Captura das dimensões da imagem
-  width=mask.size().width;
-  height=mask.size().height;
+  width = mask.size().width;
+  height = mask.size().height;
 
   //Início da contagem do tempo de execução
   //auto t0 = chrono::high_resolution_clock::now();
@@ -60,42 +60,40 @@ int main(int argc, char** argv){
   floodFill(mask, {0, 0}, 1);
 
   //Busca objetos e os rotula
-  nova_cor=10;
+  new_color=10;
   for(int i=1; i < height-1; i++){
     for(int j=1; j < width-1; j++){
       if(mask.at<uchar>(i,j) == 255){
     		p.x=j;
     		p.y=i;
-    		floodFill(mask, p, nova_cor);
+        n_objects++;
+    		floodFill(mask, p, new_color);
         //Reinício da contagem para manter a cor normalizada
-        if(nova_cor==245){
-          nova_cor = 10;
+        if(new_color==245){
+          new_color = 10;
         }
         //Pula o intervalo usado pra pintar objetos com buracos
-        else if(nova_cor==110){
-          nova_cor = 140;
+        else if(new_color==110){
+          new_color = 140;
         }
         //Incremento das cores
         else{
-          nova_cor++;
+          new_color++;
         }
   	  }
     }
   }
 
-  int ponto, oeste;
   //Identificação dos objetos com buracos
   for(int i=1; i < height-1; i++){
     for(int j=1; j < width-1; j++){
       //Caso tenha encontrado algum buraco
-      ponto = mask.at<uchar>(i,j);
-      oeste = mask.at<uchar>(i,j-1);
-      if(ponto == 0){
+      if(mask.at<uchar>(i,j) == 0){
         //Analise se o pixel da esquerda não é buraco
-        if(oeste !=0 && oeste != 1 && oeste != 125){
+        if(mask.at<uchar>(i,j-1) !=0 && mask.at<uchar>(i,j-1) != 1 && mask.at<uchar>(i,j-1) != 125){
           //Se não for, pinte com o tom de cinza = "125"
-          cout << "OESTE : [" << i << " , " << j << "] \n";
           floodFill(mask, {j-1, i}, 125);
+          holes++;
         }
       }
     }
@@ -103,10 +101,11 @@ int main(int argc, char** argv){
 
   //chrono::duration<double> t_gasto = t1 - t0;
   //cout << "Tempo gasto: " << t_gasto.count() << "s\n";
-
+  cout << "Temos " << n_objects << " objetos no total, dentre eles " << holes << " têm buracos\n";
   imshow("image", image);
   imshow("mask", mask);
   //imwrite("labeling.png", image);
   waitKey();
+
   return 0;
 }
