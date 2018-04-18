@@ -12,7 +12,7 @@ int main(int argc, char** argv){
 	int P1x, P1y, P2x, P2y, menorX, menorY, maiorX, maiorY;
 	char abr_par='a', virg='b', fec_par='c';
 
-        original = imread(argv[1],CV_LOAD_IMAGE_GRAYSCALE);
+  original = imread(argv[1],CV_LOAD_IMAGE_GRAYSCALE);
 	negativo = original.clone();
 	if(!original.data){
 		cout << "A imagem nao pode ser aberta" << endl;
@@ -37,20 +37,20 @@ int main(int argc, char** argv){
 	virg    = 'b';
 	fec_par = 'c';
 
-        //Repita ate a leitura ser feita corretamente
-        do{
-                cout << "Insira o segundo ponto, formato [x,y] :\n ";
-                cin >> s;
+  //Repita ate a leitura ser feita corretamente
+  do{
+          cout << "Insira o segundo ponto, formato [x,y] :\n ";
+          cin >> s;
 
-                //Inicializacao da stringstream e preenchimento das variaveis
-                ss.str(s);
-                ss >> abr_par >> P2x >> virg >> P2y >> fec_par;
+          //Inicializacao da stringstream e preenchimento das variaveis
+          ss.str(s);
+          ss >> abr_par >> P2x >> virg >> P2y >> fec_par;
 
-                //Limpando o buffer da stringstream e tambem qualquer erro de eof
-                ss.str(string());
-                ss.clear();
+          //Limpando o buffer da stringstream e tambem qualquer erro de eof
+          ss.str(string());
+          ss.clear();
 
-        }while (abr_par!='[' && fec_par!=']' && virg!=',');
+  }while (abr_par!='[' && fec_par!=']' && virg!=',');
 
 	namedWindow("Original", WINDOW_AUTOSIZE);
 	namedWindow("Negativo", WINDOW_AUTOSIZE);
