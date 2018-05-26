@@ -1,0 +1,75 @@
+<html>
+    <head>
+    	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    </head>
+    <body>
+      <div class="minhaDiv">
+        <form>
+          <label>Altura dos Quadradinhos : </label>
+          <input type="number" id="altura"/>
+          <label>Largura dos Quadradinhos : </label>
+          <input type="number" id="largura"/>
+          <input type="checkbox" class="check" onclick="criaCanvas()"/>Criar Canvas
+        </form>
+      </div>
+    </body>
+
+
+	<script>
+
+    var temCanvas = false;
+
+    function createCanvas(larguraQuadradinho, alturaQuadradinho){
+
+      // Lado da grade ???
+      var lado = 200;
+      //size of canvas
+      var cw = lado + (5*2) + 1;
+      var cw = lado + (5*2) + 1;
+
+      var canvas = $('<canvas/>').attr({width: cw, height: cw}).appendTo('div');
+      var context = canvas.get(0).getContext("2d");
+
+      function drawBoard(){
+          for (var x = 0; x <= lado; x += larguraQuadradinho) {
+              context.moveTo(0.5 + x + 5, 5);
+              context.lineTo(0.5 + x + 5, lado + 5);
+          }
+
+          for (x = 0; x <= lado; x += alturaQuadradinho) {
+              context.moveTo(5, 0.5 + x + 5);
+              context.lineTo(lado + 5, 0.5 + x + 5);
+          }
+
+          context.strokeStyle = "black";
+          context.stroke();
+      }
+
+      drawBoard();
+    }
+
+    function criaCanvas(){
+
+      if(document.querySelector(".check").checked){
+
+        if(!temCanvas){
+          if(document.getElementById('altura').value == "" || document.getElementById('altura').value == null){
+            alert("Altura ta vazio");
+          }
+          else{
+            createCanvas(Number(document.getElementById('largura').value),Number(document.getElementById('altura').value));
+            alert("Canvas criado com sucesso !");
+            temCanvas = true;
+          }
+        }
+        else{
+          alert("O canvas ja ta criado, ta cego?");
+        }
+
+      }
+
+    }
+
+	</script>
+
+</html>
