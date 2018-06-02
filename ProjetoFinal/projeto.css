@@ -1,0 +1,33 @@
+table{
+	width: 100%;
+	height: 100%;
+	border-spacing: 0;
+}
+td{
+	box-sizing: border-box;
+	border: 1px solid black;
+	background-color: #ffffff;
+}
+td.active{
+	background-color: #000000;
+}
+.tabelas {
+    width: 95%;
+    height: 400px;
+    margin: auto;
+    padding: 10px;
+}
+.meuDesenho {
+    width: 50%;
+    height: 400px;
+    background: red;
+    float: left;
+}
+.meuEE {
+    margin-left: 60%;
+    height: 400px;
+    background: black;
+}
+/*		#criaTabela{
+	display: none;
+}*/
