@@ -12,21 +12,28 @@ td.active{
 	background-color: #000000;
 }
 .tabelas {
-    width: 95%;
-    height: 400px;
-    margin: auto;
-    padding: 10px;
+  width: 95%;
+  height: 400px;
+  margin: auto;
+  padding: 10px;
 }
 .meuDesenho {
-    width: 50%;
-    height: 400px;
-    background: red;
-    float: left;
+  width: 50%;
+  height: 400px;
+  /* background: red; */
+  float: left;
 }
 .meuEE {
-    margin-left: 60%;
-    height: 400px;
-    background: black;
+  margin-left: 60%;
+  height: 400px;
+  /* background: black; */
+}
+.meuResultado {
+	width: 50%;
+	height: 200px;
+	margin: auto;
+	padding: 10px;
+/* background: blue; */
 }
 /*		#criaTabela{
 	display: none;

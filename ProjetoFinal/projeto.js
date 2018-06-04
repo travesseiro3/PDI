@@ -7,12 +7,23 @@ var ee_matriz = [];
 // Matriz usada para guardar a imagem
 var desenho_matriz = [];
 
+// function criarEE(largura, altura){
+// 	var matriz = [];
+// 	for(l=0; l<largura; l++){
+// 		matriz[l] = [];
+// 		for(c=0; c<altura; c++){
+// 			matriz[l][c] = l+c+1;
+// 		}
+// 	}
+// 	return matriz;
+// }
+
 function desenhaTabela(largura, altura, id, div){
 	var tb = "<table>";
 	for(l=0; l<largura; l++){
 		tb += "<tr>";
 		for(c=0; c<altura; c++){
-			tb+="<td id='td"+Number(l+1)+"tr"+Number(c+1)+id+"'></td>";
+			tb+="<td id='tr"+Number(l+1)+"td"+Number(c+1)+id+"'></td>";
 		}
 		tb += "</tr>";
 	}
@@ -20,32 +31,43 @@ function desenhaTabela(largura, altura, id, div){
 	$(tb).appendTo(div);
 }
 
-function preencheMatriz(largura, altura){
-	var matriz = [];
-	for(l=0; l<largura; l++){
-		matriz[l] = [];
-		for(c=0; c<altura; c++){
-			matriz[l][c] = l+c+1;
-		}
-	}
-
-	return matriz;
+// Função para retornar a linha e a coluna da célula na tabela
+function retornaPosicao(id){
+	var res = id.split("tr")[1].split("td");
+	return {
+		tr : res[0],
+		td : res[1].split("_")[0]
+	};
 }
 
-function criaTabela(){
+// Função para sincronizar a matriz com o desenho
+function atualizaMatrizDesenho(tr, td){
+	if($(".meuDesenho table tbody tr:nth-child("+Number(tr)+") td:nth-child("+Number(td)+")").attr('class')=='active'){
+		desenho_matriz[tr-1][td-1] = 1;
+	}
+	else{
+		desenho_matriz[tr-1][td-1] = 0;
+	}
+	$(".meuResultado table tbody tr:nth-child("+Number(tr)+") td:nth-child("+Number(td)+")").toggleClass('active');
+}
+
+function criaMatrizDesenho(largura, altura){
+	for(l=0; l<largura; l++){
+		desenho_matriz[l] = [];
+		for(c=0; c<altura; c++){
+				desenho_matriz[l][c] = 0;
+		}
+	}
+	desenhaTabela(largura, altura, "_resultado", ".meuResultado");
+}
+
+function main(){
 
 	$(document).ready(function(){
 		$(".meuDesenho table tbody tr td").on("click", function(){
 			$(this).toggleClass('active');
-//				var x = ($(this)[0].id);
-//				$(this).toggleClass('active');
-//				if(($(this).attr("class"))=="active"){
+			atualizaMatrizDesenho(retornaPosicao($(this).attr("id")).tr, retornaPosicao($(this).attr("id")).td);
 //				$(this).css("background-color", $('#paleta').val());
-//					alert("Trocou a cor");
-//				}
-//				else{
-//					alert("Já foi apertado");
-//				}
 		});
 
 //			$("#paleta").on("change", function(){
@@ -53,10 +75,11 @@ function criaTabela(){
 //			});
 	});
 
-	if(document.querySelector("#check").checked){
+	// Quando a checkbox "Criar Tabela" for apertada
+	if(document.querySelector("#caixinha").checked){
 
+		// Caso nenhuma grade tenha sido criada
 		if(!temTabela){
-
 			var altura = document.getElementById('altura').value;
 			var largura = document.getElementById('largura').value;
 
@@ -64,33 +87,22 @@ function criaTabela(){
 			if(altura == "" || largura == ""){
 				alert("Altura ou(e) Largura vazio(s)");
 			}
-
 			// Verificação de medida inválida para a grade
 			else if(Number(altura) <= 0 || Number(largura) <= 0){
 				alert("Altura ou(e) Largura devem ser maiores que 0");
 			}
-
-
 			// Criação da grade de imagem e do elemento estruturante
 			else{
-
 				// Criação da grade que será usada para desenhar a imagem
-				desenhaTabela(largura, altura, "_image", ".meuDesenho");
-
+				desenhaTabela(largura, altura, "_desenho", ".meuDesenho");
 				temTabela = true;
 				alert("Tabela criada com sucesso !");
-
 				// Criação da grade que será usada para mostrar o elemento estruturante
 				desenhaTabela(3, 3, "_ee", ".meuEE");
-
-//				var m = preencheMatriz(3,3);
-
+				// Criação da matriz que representa a imagem
+				criaMatrizDesenho(largura, altura, ".meuDesenho");
 			}
 		}
-
-//		else{
-//			alert("A tabela já existe!");
-//		}
 	}
 
 }
