@@ -14,8 +14,12 @@ var ee_imagem_matriz = [];
 var alturaGrade = 15, larguraGrade = 15;
 // Dimensões das grades dos elementos estruturantes
 var alturaEE = 9, larguraEE = 9;
+// Classe utilizada para a dilatação
+var dilatedClass = "dilated1";
+// Classe utilizada para a erosão
+var erodedClass = "eroded1";
 
-// Caso nenhuma grade tenha sido criada
+// Criação e Inicialização do ambiente
 if(!jaCriouTudo){
 	let novaAlturaGrade = Number(document.getElementById('colunasGrade').value);
 	let novaLarguraGrade = Number(document.getElementById('linhasGrade').value);
@@ -54,9 +58,15 @@ if(!jaCriouTudo){
 	criaMatriz(larguraGrade, alturaGrade, 3);
 	criaMatriz(larguraEE, alturaEE, 4);
 
+	// Inicia com a primeira cor selecionada
+	$("a#dilat1").toggleClass('dilated');
+	// Inicia com a primeira cor selecionada
+	$("a#eros1").toggleClass('eroded');
+
 	jaCriouTudo = true;
 }
 
+// Função para desenhar as tabelas nas divs passadas
 function desenhaTabela(largura, altura, div){
 	let tb = "<table>";
 	for(l=0; l<largura; l++){
@@ -110,12 +120,12 @@ function atualizaMatrizPelaTabela(tr, td, imageEnum){
 }
 
 // Função para sincronizar a tabela do resultado com a matriz
-function atualizaTabelaPelaMatriz(width, height, operation){
+function atualizaTabelaPelaMatriz(width, height){
 	for(l=0; l<width; l++){
 		for(c=0; c<height; c++){
 			if(resultado_matriz[l][c] == 255){
 				if(desenho_matriz[l][c] == 0){
-					$(".tabelaSaida table tbody tr:nth-child("+Number(l+1)+") td:nth-child("+Number(c+1)+")").toggleClass('dilated');
+					$(".tabelaSaida table tbody tr:nth-child("+Number(l+1)+") td:nth-child("+Number(c+1)+")").toggleClass(dilatedClass);
 				}
 				else{
 					$(".tabelaSaida table tbody tr:nth-child("+Number(l+1)+") td:nth-child("+Number(c+1)+")").toggleClass('active');
@@ -123,7 +133,7 @@ function atualizaTabelaPelaMatriz(width, height, operation){
 			}
 			else{
 				if(desenho_matriz[l][c] == 255){
-					$(".tabelaSaida table tbody tr:nth-child("+Number(l+1)+") td:nth-child("+Number(c+1)+")").toggleClass('eroded');
+					$(".tabelaSaida table tbody tr:nth-child("+Number(l+1)+") td:nth-child("+Number(c+1)+")").toggleClass(erodedClass);
 				}
 				else{
 					$(".tabelaSaida table tbody tr:nth-child("+Number(l+1)+") td:nth-child("+Number(c+1)+")").removeClass();
@@ -133,6 +143,7 @@ function atualizaTabelaPelaMatriz(width, height, operation){
 	}
 }
 
+// Função para criar e inicializar as matrizes que guardarão os valores das tabelas
 function criaMatriz(largura, altura, tableEnum){
 	switch(tableEnum){
 		case 1:
@@ -171,6 +182,7 @@ function criaMatriz(largura, altura, tableEnum){
 	}
 }
 
+// Funções responsáveis pelo funcionamento correto das operações nas tabelas
 function funcoesTabela(){
 
 	$(document).ready(function(){
@@ -262,6 +274,7 @@ function funcoesTabela(){
 
 }	
 
+// Funções responsáveis pelo funcionamento correto das operações nas imagens
 function funcoesImagem(){
 
 	$(document).ready(function(){
@@ -345,6 +358,7 @@ function funcoesImagem(){
 
 }
 
+// Função executada quando pelo menos uma das medidas das tabelas é alterada
 function personalizarDimensoes(){
 	let novaAlturaGrade = Number(document.getElementById('colunasGrade').value);
 	let novaLarguraGrade = Number(document.getElementById('linhasGrade').value);
@@ -364,5 +378,67 @@ function personalizarDimensoes(){
 		desenhaTabela(novaLarguraEE, novaAlturaEE, ".imagemEE");
 	}
 
-	alert("Deu certo");
+	alert("Medidas atualizadas com sucesso!");
+}
+
+// Função para retornar o id numerico do quadradinho
+function retornaIdNumerico(operacao, id){
+	return Number(id.split(operacao)[1]);
+}
+
+// Função para remover o destaque das cores não escolhidas
+function removerDestaque(operacao, classe, id){
+	let n = retornaIdNumerico(operacao, id);
+	for(l=1; l<=7; l++){
+		if($("#"+operacao+l).attr("class")==classe && l!= n){
+			$("#"+operacao+l).removeClass();
+		}
+	}
+}
+
+// Função para alterar as cores padrões dos elementos
+function changeColor(){
+
+	$(document).ready(function(){
+
+		let dilatedId = 1;
+		let erodedId = 1;
+
+		$("a").on("click", function(){
+
+			// Se for algum de dilatação :
+			if($(this).attr("class")!="dilated" && (
+				$(this).attr("id") == "dilat1" ||	$(this).attr("id") == "dilat2" ||	$(this).attr("id") == "dilat3" ||
+				$(this).attr("id") == "dilat4" ||	$(this).attr("id") == "dilat5" ||	$(this).attr("id") == "dilat6" ||
+				$(this).attr("id") == "dilat7")    ){
+
+				$(this).toggleClass('dilated');
+				removerDestaque("dilat", "dilated", $(this).attr("id"));
+				dilatedId = retornaIdNumerico("dilat", $(this).attr("id"));
+				dilatedClass = "dilated" + dilatedId;
+			}
+
+			// Se for algum de erosão :
+			else if($(this).attr("class")!="eroded" && (
+				$(this).attr("id") == "eros1" ||	$(this).attr("id") == "eros2" ||	$(this).attr("id") == "eros3" ||
+				$(this).attr("id") == "eros4" ||	$(this).attr("id") == "eros5" ||	$(this).attr("id") == "eros6" ||
+				$(this).attr("id") == "eros7")    ){
+				$(this).toggleClass('eroded');
+				removerDestaque("eros", "eroded", $(this).attr("id"));
+				erodedId = retornaIdNumerico("eros", $(this).attr("id"));
+				erodedClass = "eroded" + erodedId;
+			}
+
+		});
+
+/* 		$("#botaoMudaCor").on("click", function(){
+
+			dilatedClass = "dilated" + dilatedId;
+			erodedClass = "eroded" + erodedId;
+
+			alert("Cores atualizadas com sucesso!");
+
+		});
+ */
+	});
 }

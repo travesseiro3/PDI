@@ -19,12 +19,15 @@ label{
   font-weight: 900;
 }
 form{
+  margin-top: 4%;
   margin-left: -10%;
 }
 #arquivoImagem{
   display: none;
 }
-
+.modal-footer{
+  margin-top: -5%;
+}
 
 td{
 	box-sizing: border-box;
@@ -34,21 +37,10 @@ td{
 td.active{
 	background-color: white;
 }
-td.dilated{
-  background-color: aquamarine;
-}
-td.eroded{
-  background-color: hotpink;
-}
-.meuForm {
-  margin: 20%;
-}
-
-
 
 .menuTabelas, .menuImagens{
   margin-left: 2%;
-  width: 12%;
+  width: 13%;
   height: 100%;
   float: left;
 }
@@ -62,15 +54,14 @@ td.eroded{
 }
 
 
-
 .tabelas, .imagens {
     width: 80%;
     height: 40%;
-    margin-left: 4.5%;
+    margin-left: 3.5%;
     margin-top: 2%;
 }
 .tabelaEntrada, .imagemEntrada {
-    width: 48%;
+    width: 47%;
     height: 100%;
     float: left;
 }
@@ -88,10 +79,43 @@ td.eroded{
 }
 
 
+a.dilated, a.eroded{
+  stroke: gray;
+  stroke-width: 5;
+}
+
+a#dilat1{ fill: #1034a6; }
+a#dilat2{ fill: #008ecc; }
+a#dilat3{ fill: #0080ff; }
+a#dilat4{ fill: #7ef9ff; }
+a#dilat5{ fill: #3fe0d0; }
+a#dilat6{ fill: #00ffaa; }
+a#dilat7{ fill: #008081; }
+
+td.dilated1{ background-color: #1034a6;}
+td.dilated2{ background-color: #008ecc;}
+td.dilated3{ background-color: #0080ff;}
+td.dilated4{ background-color: #7ef9ff;}
+td.dilated5{ background-color: #3fe0d0;}
+td.dilated6{ background-color: #00ffaa;}
+td.dilated7{ background-color: #008081;}
 
 
+a#eros1{ fill: #ff0033; }
+a#eros2{ fill: #ff3333; }
+a#eros3{ fill: #ff6600; }
+a#eros4{ fill: #ff9966; }
+a#eros5{ fill: #ff6699; }
+a#eros6{ fill: #ff00ff; }
+a#eros7{ fill: #ff0066; }
 
-
+td.eroded1{ background-color: #ff0033;}
+td.eroded2{ background-color: #ff3333;}
+td.eroded3{ background-color: #ff6600;}
+td.eroded4{ background-color: #ff9966;}
+td.eroded5{ background-color: #ff6699;}
+td.eroded6{ background-color: #ff00ff;}
+td.eroded7{ background-color: #ff0066;}
 
 
 
@@ -130,7 +154,7 @@ html, body, .page {
   #p1 {
     left: 0;
   }
-  #p2, #p3, #p4 {
+  #p2, #p3, #p4, #p5 {
     left: 200%;
   }
 
@@ -139,12 +163,14 @@ html, body, .page {
   #p2 { background: black }
   #p3 { background: black; }
   #p4 { background: black; }
+  #p5 { background: black; }
 
  
 /* Usado para mostrar as páginas */
   #t2:target #p2,
   #t3:target #p3,
-  #t4:target #p4 {
+  #t4:target #p4,
+  #t5:target #p5 {
     transform: translateX(-190%);
     -webkit-transform: translateX(-190%);
     -moz-transform: translateX(-190%);
@@ -156,14 +182,16 @@ html, body, .page {
 /* Cor do menu lateral para alguma página, que não seja a primeira */
   #t2:target #p1,
   #t3:target #p1,
-  #t4:target #p1 {
+  #t4:target #p1,
+  #t5:target #p1 {
     background: black;
   }
 
 /* Usado para borrar a imagem de fundo, quando houver uma transição no menu lateral */
   #t2:target #p1 .icon,
   #t3:target #p1 .icon,
-  #t4:target #p1 .icon {
+  #t4:target #p1 .icon,
+  #t5:target #p1 .icon {
     -webkit-filter: blur(3px);
   }
 
@@ -179,7 +207,8 @@ html, body, .page {
 
   #t2:target ul .icon,
   #t3:target ul .icon,
-  #t4:target ul .icon {
+  #t4:target ul .icon,
+  #t5:target ul .icon {
     transform: scale(.6);
     -webkit-transform: scale(.6);
     -moz-transform: scale(.6);
@@ -189,7 +218,8 @@ html, body, .page {
 
   #t2:target #dos,
   #t3:target #tres,
-  #t4:target #cuatro {
+  #t4:target #cuatro,
+  #t5:target #cinco {
     transform: scale(1.2) !important;
     -webkit-transform: scale(1.2) !important;
     -moz-transform: scale(1.2) !important;
@@ -266,7 +296,8 @@ html, body, .page {
 /* Usado para mostrar os ícones nas respectivas páginas */
   #t2:target .page#p2 .icon,
   #t3:target .page#p3 .icon,
-  #t4:target .page#p4 .icon {
+  #t4:target .page#p4 .icon,
+  #t5:target .page#p5 .icon {
     transform: translateX(0) !important;
     -webkit-transform: translateX(0) !important;
     -moz-transform: translateX(0) !important;
