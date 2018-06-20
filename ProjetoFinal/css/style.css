@@ -1,0 +1,275 @@
+table, canvas, img{
+	width: 100%;
+	height: 100%;
+}
+canvas{
+  border: 1px solid white;
+}
+table{
+  border-spacing: 0;
+}
+select{
+  width: 100%;
+}
+img{
+  margin-top: 1.7%;
+}
+label{
+  display: inherit;
+  font-weight: 900;
+}
+form{
+  margin-left: -10%;
+}
+#arquivoImagem{
+  display: none;
+}
+
+
+td{
+	box-sizing: border-box;
+	border: 1px solid white;
+	background-color: black;
+}
+td.active{
+	background-color: white;
+}
+td.dilated{
+  background-color: aquamarine;
+}
+td.eroded{
+  background-color: hotpink;
+}
+.meuForm {
+  margin: 20%;
+}
+
+
+
+.menuTabelas, .menuImagens{
+  margin-left: 2%;
+  width: 12%;
+  height: 100%;
+  float: left;
+}
+.menuCentral{
+  margin-top: 25%;
+}
+
+#botaoOperacaoImagem, #botaoOperacaoTabela{
+  margin-left: 20%;
+  margin-top: 30%;
+}
+
+
+
+.tabelas, .imagens {
+    width: 80%;
+    height: 40%;
+    margin-left: 4.5%;
+    margin-top: 2%;
+}
+.tabelaEntrada, .imagemEntrada {
+    width: 48%;
+    height: 100%;
+    float: left;
+}
+.tabelaEE, .imagemEE {
+  margin-left: 2%;
+  width: 36%;
+  height: 100%;
+  float: left;
+}
+.tabelaSaida, .imagemSaida {
+  width: 37%;
+  height: 40%;
+  margin-top: 4%;
+  margin-left: 24%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+html, body, .page {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    transition: all .6s cubic-bezier(.5, .2, .2, 1.1);
+    -webkit-transition: all .6s cubic-bezier(.5, .2, .2, 1.1);
+    -moz-transition: all .6s cubic-bezier(.5, .2, .2, 1.1);
+    -o-transition: all .6s cubic-bezier(.5, .2, .2, 1.1);
+    color: #fff;
+    overflow: hidden;
+  }
+
+/* Fonte padrão para todos os elementos */
+  * {
+    font-family: 'open sans', 'lato', 'helvetica', sans-serif;
+  }
+
+  .page {
+    position: absolute;
+  }
+
+/* Posição das páginas com relação ao menu */
+  #p1 {
+    left: 0;
+  }
+  #p2, #p3, #p4 {
+    left: 200%;
+  }
+
+/* Cores de fundo das páginas */
+  #p1 { background: black; }
+  #p2 { background: black }
+  #p3 { background: black; }
+  #p4 { background: black; }
+
+ 
+/* Usado para mostrar as páginas */
+  #t2:target #p2,
+  #t3:target #p3,
+  #t4:target #p4 {
+    transform: translateX(-190%);
+    -webkit-transform: translateX(-190%);
+    -moz-transform: translateX(-190%);
+    -o-transform: translateX(-190%);
+    transition-delay: .4s !important;
+  }
+
+
+/* Cor do menu lateral para alguma página, que não seja a primeira */
+  #t2:target #p1,
+  #t3:target #p1,
+  #t4:target #p1 {
+    background: black;
+  }
+
+/* Usado para borrar a imagem de fundo, quando houver uma transição no menu lateral */
+  #t2:target #p1 .icon,
+  #t3:target #p1 .icon,
+  #t4:target #p1 .icon {
+    -webkit-filter: blur(3px);
+  }
+
+  .icon {
+    color: #fff;
+    font-size: 32px;
+    display: block;
+  }
+
+  .page .icon .title {
+    line-height: 2;
+  }
+
+  #t2:target ul .icon,
+  #t3:target ul .icon,
+  #t4:target ul .icon {
+    transform: scale(.6);
+    -webkit-transform: scale(.6);
+    -moz-transform: scale(.6);
+    -o-transform: scale(.6);
+    transition-delay: .25s;
+  }
+
+  #t2:target #dos,
+  #t3:target #tres,
+  #t4:target #cuatro {
+    transform: scale(1.2) !important;
+    -webkit-transform: scale(1.2) !important;
+    -moz-transform: scale(1.2) !important;
+    -o-transform: scale(1.2) !important;
+  }
+
+  ul {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    height: 280px;
+    width: 10%;
+    padding: 0;
+    text-align: center;
+   }
+
+  #menu .icon {
+    margin: 30px 0;
+    transition: all .5s ease-out !important;
+    -webkit-transition: all .5s ease-out;
+    -moz-transition: all .5s ease-out;
+    -o-transition: all .5s ease-out;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+/* Tamanho da fonte dos elementos */
+  .title {
+    font-size: 38px;
+  }
+  .hint {
+    font-size: 18px;
+  }
+
+
+  .line-trough {
+    text-decoration: line-through;
+  }
+
+  .page .icon {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 10%;
+    left: 0;
+    width: 270px;
+    height: 170px;
+    margin: auto;
+    text-align: center;
+    font-size: 80px;
+    line-height: 1.3;
+    transform: translateX(360%);
+    -webkit-transform: translateX(360%);
+    -moz-transform: translateX(360%);
+    -o-transform: translateX(360%);
+    transition: all .5s cubic-bezier(.25, 1, .5, 1.25);
+    -webkit-transition: all .5s cubic-bezier(.25, 1, .5, 1.25);
+    -moz-transition: all .5s cubic-bezier(.25, 1, .5, 1.25);
+    -o-transition: all .5s cubic-bezier(.25, 1, .5, 1.25);
+  }
+
+  .page#p1 .icon {
+    height: 30%;
+    width: 35%;
+    transform: translateX(10%) !important;
+  }
+
+
+/* Usado para mostrar os ícones nas respectivas páginas */
+  #t2:target .page#p2 .icon,
+  #t3:target .page#p3 .icon,
+  #t4:target .page#p4 .icon {
+    transform: translateX(0) !important;
+    -webkit-transform: translateX(0) !important;
+    -moz-transform: translateX(0) !important;
+    -o-transform: translateX(0) !important;
+    transition-delay: 1s;
+  }
